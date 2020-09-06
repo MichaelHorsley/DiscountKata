@@ -9,10 +9,10 @@ namespace CheapestPriceTests
     {
         private readonly List<Discount> _discounts = new List<Discount>
         {
-            new Discount
-            {
-                SetCount = 2, DiscountPercentage = 5
-            }
+            new Discount { SetCount = 2, DiscountPercentage = 5 },
+            new Discount { SetCount = 3, DiscountPercentage = 10 },
+            new Discount { SetCount = 4, DiscountPercentage = 20 },
+            new Discount { SetCount = 5, DiscountPercentage = 25 }
         };
 
         [Test]
@@ -33,6 +33,16 @@ namespace CheapestPriceTests
             decimal calculatorPrices = discountService.CalculatorPrices(_discounts, new List<int> { 1 });
 
             Assert.AreEqual(new decimal(8.0), calculatorPrices);
+        }
+
+        [Test]
+        public void GivenOneSetOfItemsAndOneDuplicateReturnsOneSetPriceAndOneNormal()
+        {
+            var discountService = new DiscountService();
+
+            decimal calculatorPrices = discountService.CalculatorPrices(_discounts, new List<int> { 1, 2, 2 });
+
+            Assert.AreEqual(new decimal(23.2), calculatorPrices);
         }
 
         [TestCase(new[]{1,2}, "15.2")]
