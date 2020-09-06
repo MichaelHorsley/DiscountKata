@@ -46,6 +46,7 @@ namespace CheapestPriceTests
         }
 
         [TestCase(new[]{1,2}, "15.2")]
+        [TestCase(new[]{1, 2, 3}, "21.6")]
         public void GivenItemsReturnsExpectedPrice(int[] productList, decimal expectedPrice)
         {
             var discountService = new DiscountService();
