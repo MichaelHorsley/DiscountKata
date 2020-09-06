@@ -1,0 +1,7 @@
+*.jpeg
+packages
+*/bin
+*/obj
+*.suo
+*.DotSettings
+.vs/
