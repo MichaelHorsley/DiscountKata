@@ -5,7 +5,7 @@ namespace CheapestPriceTests
 {
     public class DiscountService
     {
-        public decimal CalculatorPrices(List<Discount> discounts, List<int> list)
+        public decimal CalculateCheapestPrice(List<Discount> discounts, List<int> list)
         {
             var sumTotal = 0m;
 
