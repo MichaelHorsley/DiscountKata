@@ -9,22 +9,46 @@ namespace CheapestPriceTests
         {
             var sumTotal = 0m;
 
+            var productListToBeAltered = new List<int>(list);
+
             foreach (var discount in discounts.OrderByDescending(x => x.SetCount))
             {
-                if (list.Count == discount.SetCount)
+                var validForDiscount = ValidForDiscount(productListToBeAltered, discount);
+
+                if (validForDiscount)
                 {
-                    sumTotal += 8.0m * list.Count * (100.0m - discount.DiscountPercentage) / 100.0m;
-                    
-                    for (int i = 0; i < discount.SetCount; i++)
+                    sumTotal += 8.0m * discount.SetCount * (100.0m - discount.DiscountPercentage) / 100.0m;
+                }
+            }
+
+            sumTotal += productListToBeAltered.Count * 8.0m;
+
+            return sumTotal;
+        }
+
+        private static bool ValidForDiscount(List<int> productListToBeAltered, Discount discount)
+        {
+            var productHashSet = new HashSet<int>();
+            var itemsAddedToDiscount = new List<int>();
+
+            for (var index = productListToBeAltered.Count - 1; index >= 0; index--)
+            {
+                var product = productListToBeAltered[index];
+                var added = productHashSet.Add(product);
+
+                if (added)
+                {
+                    itemsAddedToDiscount.Add(product);
+
+                    if (productHashSet.Count == discount.SetCount)
                     {
-                        list.RemoveAt(0);
+                        itemsAddedToDiscount.ForEach(x => productListToBeAltered.Remove(x));
+                        return true;
                     }
                 }
             }
 
-            sumTotal += list.Count * 8.0m;
-
-            return sumTotal;
+            return false;
         }
     }
 
