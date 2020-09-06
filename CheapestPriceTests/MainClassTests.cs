@@ -15,5 +15,25 @@ namespace CheapestPriceTests
 
             Assert.AreEqual(new decimal(51.20), calculatorPrices);
         }
+
+        [Test]
+        public void GivenOneItemReturns8()
+        {
+            var discountService = new DiscountService();
+
+            decimal calculatorPrices = discountService.CalculatorPrices(new List<int> { 1 });
+
+            Assert.AreEqual(new decimal(8.0), calculatorPrices);
+        }
+
+        [Test]
+        public void GivenOneAndTwoItemReturns15point2()
+        {
+            var discountService = new DiscountService();
+
+            decimal calculatorPrices = discountService.CalculatorPrices(new List<int> { 1, 2 });
+
+            Assert.AreEqual(new decimal(15.2), calculatorPrices);
+        }
     }
 }
