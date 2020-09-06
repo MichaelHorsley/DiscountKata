@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace CheapestPriceTests
@@ -34,14 +35,14 @@ namespace CheapestPriceTests
             Assert.AreEqual(new decimal(8.0), calculatorPrices);
         }
 
-        [Test]
-        public void GivenOneAndTwoItemReturns15point2()
+        [TestCase(new[]{1,2}, "15.2")]
+        public void GivenItemsReturnsExpectedPrice(int[] productList, decimal expectedPrice)
         {
             var discountService = new DiscountService();
 
-            decimal calculatorPrices = discountService.CalculatorPrices(_discounts, new List<int> { 1, 2 });
+            decimal calculatorPrices = discountService.CalculatorPrices(_discounts, productList.ToList());
 
-            Assert.AreEqual(new decimal(15.2), calculatorPrices);
+            Assert.AreEqual(expectedPrice, calculatorPrices);
         }
     }
 }
