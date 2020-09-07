@@ -57,12 +57,22 @@ namespace CheapestPriceTests
             Assert.AreEqual(expectedPrice, calculatorPrices);
         }
 
-        [TestCase(new[]{1,2}, "15.2")]
-        [TestCase(new[]{1, 2, 3, 4}, "25.6")]
-        [TestCase(new[]{1, 2, 3, 4, 5}, "30")]
-        [TestCase(new[]{1, 1, 1, 1, 1}, "40")]
-        [TestCase(new[]{ 1, 1, 2, 2, 3, 3, 4, 5 }, "51.20")]
+        [TestCase(new[] { 1, 2 }, "15.2")]
+        [TestCase(new[] { 1, 2, 3, 4 }, "25.6")]
+        [TestCase(new[] { 1, 2, 3, 4, 5 }, "30")]
+        [TestCase(new[] { 1, 1, 1, 1, 1 }, "40")]
+        [TestCase(new[] { 1, 1, 2, 2, 3, 3, 4, 5 }, "51.20")]
         public void GivenItemsReturnsExpectedPriceRecursively(int[] productList, decimal expectedPrice)
+        {
+            var discountService = new DiscountService();
+
+            decimal calculatorPrices = discountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
+
+            Assert.AreEqual(expectedPrice, calculatorPrices);
+        }
+
+        [TestCase(new[] { 1, 2, 3, 3, 4, 4, 5, 5 }, "51.20")]
+        public void MakeSureDiscountsCanBeAppliedWhenDuplicatesAreInTheHigherNumbers(int[] productList, decimal expectedPrice)
         {
             var discountService = new DiscountService();
 
