@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace CheapestPriceTests
 {
     [TestFixture]
-    public class MainClassTests
+    public class DiscountServiceTests
     {
         private readonly List<Discount> _discounts = new List<Discount>
         {

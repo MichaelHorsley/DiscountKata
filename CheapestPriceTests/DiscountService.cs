@@ -38,7 +38,7 @@ namespace CheapestPriceTests
 
                     var baseSum = 8.0m * discount.SetCount * (100.0m - discount.DiscountPercentage) / 100.0m;
 
-                    costCombinations.AddRange(AddToBaseSumOrAddToPriceListRecursively(baseSum, discounts, productListForCombination));
+                    costCombinations.AddRange(AddToBaseSumOrAddToPriceListDepthFirstTreeTraversal(baseSum, discounts, productListForCombination));
                 }
 
                 discounts.RemoveAt(0);
@@ -47,7 +47,7 @@ namespace CheapestPriceTests
             return costCombinations.Min();
         }
 
-        private List<decimal> AddToBaseSumOrAddToPriceListRecursively(decimal baseSum, List<Discount> discounts, List<int> productListForCombination)
+        private List<decimal> AddToBaseSumOrAddToPriceListDepthFirstTreeTraversal(decimal baseSum, List<Discount> discounts, List<int> productListForCombination)
         {
             var combinationPrices = new List<decimal>();
 
@@ -60,7 +60,7 @@ namespace CheapestPriceTests
                     RemoveValidProductsFromList(pathwayList, discount);
                     baseSum += 8.0m * discount.SetCount * (100.0m - discount.DiscountPercentage) / 100.0m;
 
-                    combinationPrices.AddRange(AddToBaseSumOrAddToPriceListRecursively(baseSum, discounts, pathwayList));
+                    combinationPrices.AddRange(AddToBaseSumOrAddToPriceListDepthFirstTreeTraversal(baseSum, discounts, pathwayList));
                 }
                 else
                 {
