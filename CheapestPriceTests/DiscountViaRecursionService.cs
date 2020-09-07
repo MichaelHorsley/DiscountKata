@@ -8,13 +8,15 @@ namespace CheapestPriceTests
         public static decimal CalculateCheapestPrice(List<Discount> discounts, List<int> productList)
         {
             var costCombinations = new List<decimal> { productList.Count * 8m };
-            discounts = discounts.OrderByDescending(x => x.SetCount).ToList();
+
+            discounts = OrganiseDiscountsByLargestSetRequirementToSmallest(discounts);
             productList = ShuffleProductListSoDuplicatedItemsArePutToTheFrontOfTheList(productList);
 
             while (discounts.Any())
             {
                 var productListForCombination = new List<int>(productList);
 
+                //grab the base node for the depth search
                 var discount = discounts.First();
 
                 if (CheckValidForDiscount(productList, discount))
@@ -54,6 +56,11 @@ namespace CheapestPriceTests
             }
 
             return combinationPrices;
+        }
+
+        private static List<Discount> OrganiseDiscountsByLargestSetRequirementToSmallest(List<Discount> discounts)
+        {
+            return discounts.OrderByDescending(x => x.SetCount).ToList();
         }
 
         private static void RemoveValidProductsFromList(List<int> productListToBeAltered, Discount discount)

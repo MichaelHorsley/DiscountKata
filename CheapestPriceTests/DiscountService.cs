@@ -10,7 +10,7 @@ namespace CheapestPriceTests
             var discountCombinationPrices = new List<decimal>();
             productList = ShuffleProductListSoDuplicatedItemsArePutToTheFrontOfTheList(productList);
 
-            var orderByDescending = discounts.OrderByDescending(x => x.SetCount).ToList();
+            var orderByDescending = OrganiseDiscountsByLargestSetRequirementToSmallest(discounts);
 
             while (orderByDescending.Any())
             {
@@ -20,6 +20,11 @@ namespace CheapestPriceTests
             }
 
             return discountCombinationPrices.Where(x => !x.Equals(0m)).Min();
+        }
+
+        private static List<Discount> OrganiseDiscountsByLargestSetRequirementToSmallest(List<Discount> discounts)
+        {
+            return discounts.OrderByDescending(x => x.SetCount).ToList();
         }
 
         private static decimal GetDiscountCombination(List<Discount> discounts, List<int> list)
