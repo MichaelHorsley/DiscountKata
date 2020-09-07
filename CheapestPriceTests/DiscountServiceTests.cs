@@ -62,7 +62,15 @@ namespace CheapestPriceTests
         }
 
         [TestCase(new[] { 1, 2, 3, 3, 4, 4, 5, 5 }, "51.20")]
-        public void MakeSureDiscountsCanBeAppliedWhenDuplicatesAreInTheHigherNumbers(int[] productList, decimal expectedPrice)
+        public void MakeSureDiscountsCanBeAppliedWhenDuplicatesAreAtTheEndOfTheProductList(int[] productList, decimal expectedPrice)
+        {
+            decimal calculatorPrices = DiscountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
+
+            Assert.AreEqual(expectedPrice, calculatorPrices);
+        }
+
+        [TestCase(new[] { 1, 1, 2, 2, 3, 3, 4, 5 }, "51.20")]
+        public void MakeSureDiscountsCanBeAppliedWhenDuplicatesAreAtTheStartOfTheProductList(int[] productList, decimal expectedPrice)
         {
             decimal calculatorPrices = DiscountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
 
