@@ -39,40 +39,12 @@ namespace CheapestPriceTests
             Assert.AreEqual(new decimal(23.2), calculatorPrices);
         }
 
-        [TestCase(new[]{1,2}, "15.2")]
-        [TestCase(new[]{1, 2, 3, 4}, "25.6")]
-        [TestCase(new[]{1, 2, 3, 4, 5}, "30")]
-        public void GivenItemsReturnsExpectedPrice(int[] productList, decimal expectedPrice)
-        {
-            decimal calculatorPrices = DiscountService.CalculateCheapestPrice(_discounts, productList.ToList());
-
-            Assert.AreEqual(expectedPrice, calculatorPrices);
-        }
-
         [TestCase(new[] { 1, 2 }, "15.2")]
         [TestCase(new[] { 1, 2, 3, 4 }, "25.6")]
         [TestCase(new[] { 1, 2, 3, 4, 5 }, "30")]
-        [TestCase(new[] { 1, 1, 1, 1, 1 }, "40")]
-        [TestCase(new[] { 1, 1, 2, 2, 3, 3, 4, 5 }, "51.20")]
-        public void GivenItemsReturnsExpectedPriceRecursively(int[] productList, decimal expectedPrice)
+        public void GivenItemsReturnsExpectedPrice(int[] productList, decimal expectedPrice)
         {
-            decimal calculatorPrices = DiscountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
-
-            Assert.AreEqual(expectedPrice, calculatorPrices);
-        }
-
-        [TestCase(new[] { 1, 2, 3, 3, 4, 4, 5, 5 }, "51.20")]
-        public void MakeSureDiscountsCanBeAppliedWhenDuplicatesAreAtTheEndOfTheProductList(int[] productList, decimal expectedPrice)
-        {
-            decimal calculatorPrices = DiscountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
-
-            Assert.AreEqual(expectedPrice, calculatorPrices);
-        }
-
-        [TestCase(new[] { 1, 1, 2, 2, 3, 3, 4, 5 }, "51.20")]
-        public void MakeSureDiscountsCanBeAppliedWhenDuplicatesAreAtTheStartOfTheProductList(int[] productList, decimal expectedPrice)
-        {
-            decimal calculatorPrices = DiscountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
+            decimal calculatorPrices = DiscountService.CalculateCheapestPrice(_discounts, productList.ToList());
 
             Assert.AreEqual(expectedPrice, calculatorPrices);
         }
