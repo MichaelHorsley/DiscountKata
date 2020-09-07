@@ -5,15 +5,16 @@ namespace CheapestPriceTests
 {
     public class DiscountService
     {
-        public static decimal CalculateCheapestPrice(List<Discount> discounts, List<int> list)
+        public static decimal CalculateCheapestPrice(List<Discount> discounts, List<int> productList)
         {
             var discountCombinationPrices = new List<decimal>();
+            productList = ShuffleProductListSoDuplicatedItemsArePutToTheFrontOfTheList(productList);
 
             var orderByDescending = discounts.OrderByDescending(x => x.SetCount).ToList();
 
             while (orderByDescending.Any())
             {
-                discountCombinationPrices.Add(GetDiscountCombination(orderByDescending, list));
+                discountCombinationPrices.Add(GetDiscountCombination(orderByDescending, productList));
 
                 orderByDescending.Remove(orderByDescending.First());
             }
@@ -25,6 +26,7 @@ namespace CheapestPriceTests
         {
             var costCombinations = new List<decimal>{ productList.Count * 8m };
             discounts = discounts.OrderByDescending(x => x.SetCount).ToList();
+            productList = ShuffleProductListSoDuplicatedItemsArePutToTheFrontOfTheList(productList);
 
             while (discounts.Any())
             {
@@ -152,6 +154,33 @@ namespace CheapestPriceTests
             }
 
             return false;
+        }
+
+        private static List<int> ShuffleProductListSoDuplicatedItemsArePutToTheFrontOfTheList(List<int> productList)
+        {
+            var groupedUniqueSets = new List<List<int>>();
+            var listToBeAltered = new List<int>(productList.OrderBy(x => x));
+
+            while (listToBeAltered.Any())
+            {
+                var uniqueProductSet = new HashSet<int>();
+
+                foreach (var productItem in listToBeAltered)
+                {
+                    uniqueProductSet.Add(productItem);
+                }
+
+                groupedUniqueSets.Add(uniqueProductSet.ToList());
+
+                foreach (var itemToBeRemoved in uniqueProductSet)
+                {
+                    listToBeAltered.Remove(itemToBeRemoved);
+                }
+            }
+
+            groupedUniqueSets.Reverse();
+
+            return groupedUniqueSets.SelectMany(x => x).ToList();
         }
     }
 
