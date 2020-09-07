@@ -18,9 +18,7 @@ namespace CheapestPriceTests
         [Test]
         public void FinalGoal()
         {
-            var discountService = new DiscountService();
-
-            decimal calculatorPrices = discountService.CalculateCheapestPrice(_discounts, new List<int> { 1, 1, 2, 2, 3, 3, 4, 5 });
+            decimal calculatorPrices = DiscountService.CalculateCheapestPrice(_discounts, new List<int> { 1, 1, 2, 2, 3, 3, 4, 5 });
 
             Assert.AreEqual(new decimal(51.20), calculatorPrices);
         }
@@ -28,9 +26,7 @@ namespace CheapestPriceTests
         [Test]
         public void GivenOneItemReturns8()
         {
-            var discountService = new DiscountService();
-
-            decimal calculatorPrices = discountService.CalculateCheapestPrice(_discounts, new List<int> { 1 });
+            decimal calculatorPrices = DiscountService.CalculateCheapestPrice(_discounts, new List<int> { 1 });
 
             Assert.AreEqual(new decimal(8.0), calculatorPrices);
         }
@@ -38,9 +34,7 @@ namespace CheapestPriceTests
         [Test]
         public void GivenOneSetOfItemsAndOneDuplicateReturnsOneSetPriceAndOneNormal()
         {
-            var discountService = new DiscountService();
-
-            decimal calculatorPrices = discountService.CalculateCheapestPrice(_discounts, new List<int> { 1, 2, 2 });
+            decimal calculatorPrices = DiscountService.CalculateCheapestPrice(_discounts, new List<int> { 1, 2, 2 });
 
             Assert.AreEqual(new decimal(23.2), calculatorPrices);
         }
@@ -50,9 +44,7 @@ namespace CheapestPriceTests
         [TestCase(new[]{1, 2, 3, 4, 5}, "30")]
         public void GivenItemsReturnsExpectedPrice(int[] productList, decimal expectedPrice)
         {
-            var discountService = new DiscountService();
-
-            decimal calculatorPrices = discountService.CalculateCheapestPrice(_discounts, productList.ToList());
+            decimal calculatorPrices = DiscountService.CalculateCheapestPrice(_discounts, productList.ToList());
 
             Assert.AreEqual(expectedPrice, calculatorPrices);
         }
@@ -64,9 +56,7 @@ namespace CheapestPriceTests
         [TestCase(new[] { 1, 1, 2, 2, 3, 3, 4, 5 }, "51.20")]
         public void GivenItemsReturnsExpectedPriceRecursively(int[] productList, decimal expectedPrice)
         {
-            var discountService = new DiscountService();
-
-            decimal calculatorPrices = discountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
+            decimal calculatorPrices = DiscountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
 
             Assert.AreEqual(expectedPrice, calculatorPrices);
         }
@@ -74,9 +64,7 @@ namespace CheapestPriceTests
         [TestCase(new[] { 1, 2, 3, 3, 4, 4, 5, 5 }, "51.20")]
         public void MakeSureDiscountsCanBeAppliedWhenDuplicatesAreInTheHigherNumbers(int[] productList, decimal expectedPrice)
         {
-            var discountService = new DiscountService();
-
-            decimal calculatorPrices = discountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
+            decimal calculatorPrices = DiscountService.CalculateCheapestPriceWithRecursion(_discounts, productList.ToList());
 
             Assert.AreEqual(expectedPrice, calculatorPrices);
         }

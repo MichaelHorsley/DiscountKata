@@ -5,7 +5,7 @@ namespace CheapestPriceTests
 {
     public class DiscountService
     {
-        public decimal CalculateCheapestPrice(List<Discount> discounts, List<int> list)
+        public static decimal CalculateCheapestPrice(List<Discount> discounts, List<int> list)
         {
             var discountCombinationPrices = new List<decimal>();
 
@@ -21,7 +21,7 @@ namespace CheapestPriceTests
             return discountCombinationPrices.Where(x => !x.Equals(0m)).Min();
         }
 
-        public decimal CalculateCheapestPriceWithRecursion(List<Discount> discounts, List<int> productList)
+        public static decimal CalculateCheapestPriceWithRecursion(List<Discount> discounts, List<int> productList)
         {
             var costCombinations = new List<decimal>{ productList.Count * 8m };
             discounts = discounts.OrderByDescending(x => x.SetCount).ToList();
@@ -47,7 +47,7 @@ namespace CheapestPriceTests
             return costCombinations.Min();
         }
 
-        private List<decimal> AddToBaseSumOrAddToPriceListDepthFirstTreeTraversal(decimal baseSum, List<Discount> discounts, List<int> productListForCombination)
+        private static List<decimal> AddToBaseSumOrAddToPriceListDepthFirstTreeTraversal(decimal baseSum, List<Discount> discounts, List<int> productListForCombination)
         {
             var combinationPrices = new List<decimal>();
 
